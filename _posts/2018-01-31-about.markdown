@@ -9,7 +9,8 @@ tags: []
 Computer vision plays a big role in many of today's high-tech inventions. This fast-growing field allows a machine or a computer to "understand" useful information from an image or a sequence of images through its methods (i.e. feature extraction, edge detection, pattern recognition, and etc.). The gathered information then can be used to design a powerful tool (or algorithm) that can serve many remarkable purposes. Some of its most popular current applications include Apple's Animoji (as seen in picture above), [Apple's Face ID](https://www.macworld.com/article/3225406/iphone-ipad/face-id-iphone-x-faq.html), [Snapchat's face-tracking filters](https://petapixel.com/2016/06/30/snapchats-powerful-facial-recognition-technology-works/) and [Tesla's Autopilot](https://www.tesla.com/autopilot).     
 
 ## About This Blog
-If you're interested in learning more about computer vision, you have come to the right place. Bedibyte is my personal blog that focuses on the discussion, coding and applications of computer vision in a variety of disciplines. The main programming language that I will be using in my codes is Python, using OpenCV's open-sourced library.
+------
+If you're interested in learning more about computer vision, you have come to the right place. BediByte is my personal blog that focuses on the discussion, coding and applications of computer vision in a variety of disciplines. The main programming language that I will be using in my codes is Python, using OpenCV's open-sourced library.
 
 My main goals are to:
 * Share the tips and tricks that I have learned from my past experiences
@@ -17,14 +18,7 @@ My main goals are to:
 * Allow you to follow me on my journey to explore the world of computer vision
 
 ## About Me
+------
 My name is Adly Harith Abul Khair. I have received my Bachelors of Science degree in electrical engineering from University of Minnesota - Twin Cities, U.S.A. in December 2017. I am now looking to pursue my master's degree at Arizona State University starting this August 2018. During my final year of my bachelor's degree, my groupmates and I have worked on a project that involves implementing two computer vision algorithms (which will be discussed further in future posts) on a Solar Unmanned Aerial Vehicle under [Professor Nikolaos Papanikolopoulos](https://www-users.cs.umn.edu/~papan001/). The experience has developed my interest in computer vision entirely and inspired me to write this blog.
 
-The following are links to my social media profiles:
-
-**LinkedIn:** [Adly Abul Khair](https://www.linkedin.com/in/adly-abul-khair-60312b127/)
-
-**Facebook:** [Adly Harith](https://www.facebook.com/adly.harith)
-
-**Twitter:** [@AdlyKhair](https://twitter.com/AdlyKhair)
-
-For any inquiries, please feel free to drop me an email at **bedibyte@gmail.com**.
+For any inquiries, please feel free to drop me an email at **bedibyte@gmail.com** or message me at [LinkedIn](https://www.linkedin.com/in/adly-abul-khair-60312b127/))
