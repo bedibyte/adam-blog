@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Introduction
+title: About
 date: 2018-01-31 13:32:20 +0300
 description: Computer vision plays a big role in many of today's high-tech inventions. This fast-growing field allows a machine or a computer to "understand" useful information from an image or a sequence of images through its methods (i.e. feature extraction, edge detection, pattern recognition, and etc.).
 img: post-1.JPG # Add image post (optional).
