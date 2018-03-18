@@ -21,4 +21,4 @@ My main goals are to:
 ------
 My name is Adly Harith Abul Khair. I have received my Bachelors of Science degree in electrical engineering from University of Minnesota - Twin Cities, U.S.A. in December 2017. I am now looking to pursue my master's degree at Arizona State University starting this August 2018. During my final year of my bachelor's degree, my groupmates and I have worked on a project that involves implementing two computer vision algorithms (which will be discussed further in future posts) on a Solar Unmanned Aerial Vehicle under [Professor Nikolaos Papanikolopoulos](https://www-users.cs.umn.edu/~papan001/). The experience has developed my interest in computer vision entirely and inspired me to write this blog.
 
-For any inquiries, please feel free to drop me an email at [**bedibyte@gmail.com**](mailto:bedibyte@gmail.com).
+For any inquiries, please feel free to drop me an email at [bedibyte@gmail.com](mailto:bedibyte@gmail.com).
