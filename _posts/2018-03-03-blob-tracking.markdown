@@ -21,7 +21,7 @@ The key steps in designing the blob-tracking code are:
 * **Step 4:** Draw a circle enclosing the biggest blob in the mask
 * **Step 5:** Draw a line tracking the blob from the center of the frame
 
-**### Step 1**
+###**Step 1**
 Without further ado, lets jump right ahead into the first step, which involves initializing our "green" color and the list of tracked points. This part of the code looks like the following:        
 
 ```Shell
