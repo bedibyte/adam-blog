@@ -4,14 +4,16 @@ title: Blob Tracking
 date: 2018-03-03 13:32:20 +0300
 description: For my first post in BediByte, I would like to write about one of the two computer vision algorithms my team and I wrote for our senior design project in December 2017, which is a blob-tracking algorithm # (optional)
 img: post-2a.png # Add image post (optional)
-tags: [OpenCV, Python]
+tags: [Python, OpenCV]
 ---
 For my first post in BediByte, I would like to write about one of the two computer vision algorithms my team and I wrote for our senior design project in December 2017, which is a blob-tracking algorithm. The code is written in Python using OpenCV (with `numpy` and `imutils` installed).
 
 ## Features
+======
 Our blob-tracking algorithm identifies and encircles the biggest green blob seen within a video frame in real-time. This information is then used to track the blob via a line from the center of the video frame.
 
 ## Procedure
+======
 The key steps in designing the blob-tracking code are:
 * **Step 1:** Initialize the HSV color range for green blob and the list of tracked points
 * **Step 2:** Take raw input image from one video frame to the next
@@ -19,7 +21,7 @@ The key steps in designing the blob-tracking code are:
 * **Step 4:** Draw a circle enclosing the biggest blob in the mask
 * **Step 5:** Draw a line tracking the blob from the center of the frame
 
-### Step 1
+**### Step 1**
 Without further ado, lets jump right ahead into the first step, which involves initializing our "green" color and the list of tracked points. This part of the code looks like the following:        
 
 ```Shell
@@ -104,14 +106,17 @@ cv2.destroyAllWindows()
 **Lines 1 and 2** draw the connecting line, if the object is within the frame. The remaining lines of the code are simply to display the frame to our screen and stop when the 'q' key is pressed. 
 
 ## Results
+======
 Here is a demo of the working code using the front cover of my HERBS book:
 
 [![Blob-tracking Demo]({{site.baseurl}}/assets/img/post-2b.png)](http://www.youtube.com/watch?v=8UeX5rUSoTE)
 
 ## Code
-If you would like to get more information about the code, feel free to drop me an email at **bedibyte@gmail.com**.
+======
+If you would like to get more information about the code, feel free to drop me an email at [bedibyte@gmail.com](mailto:bedibyte@gmail.com).
 
 ## References
+======
 [1] “Ball Tracking with OpenCV”, pyimagesearch.com, 2015. [Online]. Available [here](https://www.pyimagesearch.com/2015/09/14/ball-tracking-with-opencv/)   
 [2] “Morphological Transformations”, opencv.org, 2014. [Online]. Available [here](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html)
 
