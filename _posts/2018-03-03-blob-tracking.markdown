@@ -24,18 +24,18 @@ The key steps in designing the blob-tracking code are:
 ### **Step 1**
 Without further ado, lets jump right ahead into the first step, which involves initializing our "green" color and the list of tracked points. This part of the code looks like the following:        
 
-```shell
+```Shell
 greenLower = (30, 80, 5)
 greenUpper = (64, 255, 255)
 pts = deque(maxlen=args["buffer"])
 ```        
 
-<u>Lines 1 and 2</u> shown above define the lower and upper boundaries of the "green" color in the HSV color space. This will help detect green objects in the video frame that are inside the specified range and filter out colors that are not. Depending on your lighting, this color range might need to be tweaked to better adjust to your surroundings. *Line 3* initializes the list of tracked points using the supplied maximum buffer size, which in default has a size of 64.
+<u>Lines 1 and 2</u> shown above define the lower and upper boundaries of the "green" color in the HSV color space. This will help detect green objects in the video frame that are inside the specified range and filter out colors that are not. Depending on your lighting, this color range might need to be tweaked to better adjust to your surroundings. <u>Line 3*</u> initializes the list of tracked points using the supplied maximum buffer size, which in default has a size of 64.
 
 ### **Step 2**
 For this step, we need to constantly take raw input image from one video frame to the next. This can be done by grabbing access to our `camera` pointer in a `while` loop. The loop will continue until we send a stop command.        
 
-```shell
+```Shell
 while True:
 	(grabbed, frame) = camera.read()
 ```        
@@ -43,7 +43,7 @@ while True:
 ### Step 3
 Next, still in the `while` loop, we need to create a binary mask of the image to identify green objects within the video frame.        
 
-```shell
+```Shell
 	frame = imutils.resize(frame, width=600)
 	height, width, channels = frame.shape
 	hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -53,14 +53,14 @@ Next, still in the `while` loop, we need to create a binary mask of the image to
 	mask = cv2.dilate(mask, None, iterations=2)
 ```          
 
-*Lines 1 - 4* above are written first to resize (to cut down the processing time), convert the frame to HSV color space and get the center location of the frame. 
+<u>Lines 1 - 4</u> above are written first to resize (to cut down the processing time), convert the frame to HSV color space and get the center location of the frame. 
 
-*Lines 5 - 7* create a binary mask to locate any green blobs present (in our previously specified color range) within the frame. The output of the call `cv2.inRange` is a binary mask where values '1' and '0' are acquainted to the pixels that are green and to those that aren't, respectively. This helps identify the green blobs effectively. Any remaining small blobs (or noise) on the mask is then removed by performing erosions and dilations. More information about erosions and dilations can be read [here](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html).
+<u>Lines 5 - 7</u> create a binary mask to locate any green blobs present (in our previously specified color range) within the frame. The output of the call `cv2.inRange` is a binary mask where values '1' and '0' are acquainted to the pixels that are green and to those that aren't, respectively. This helps identify the green blobs effectively. Any remaining small blobs (or noise) on the mask is then removed by performing erosions and dilations. More information about erosions and dilations can be read [here](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html).
 
 ### Step 4
 The next step is to draw out a circle enclosing the biggest remaining blob in the mask.        
 
-```shell
+```Shell
 	cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
 		cv2.CHAIN_APPROX_SIMPLE)[-2]
 	center = None
@@ -81,16 +81,16 @@ The next step is to draw out a circle enclosing the biggest remaining blob in th
 	pts.appendleft(center)
 ```   
 
-**Lines 1 and 2** above compute the contours or outlines of the remaining blobs. Note that an array slice of -2 is used to make the `cv2.findCountours` function compatible with both OpenCV2.3 and OpenCV3. **Line 3** initializes the center (x,y) coordinates or centroid of the blob.
+<u>Lines 1 and 2</u> above compute the contours or outlines of the remaining blobs. Note that an array slice of -2 is used to make the `cv2.findCountours` function compatible with both OpenCV2.3 and OpenCV3. <u>Line 3</u> initializes the center (x,y) coordinates or centroid of the blob.
 
-**Lines 5 - 10** help us identify the biggest blob in the mask by finding the largest contour. This information is then used to compute the minimum enclosing circle and the centroid position of that blob.
+<u>Lines 5 - 10</u> help us identify the biggest blob in the mask by finding the largest contour. This information is then used to compute the minimum enclosing circle and the centroid position of that blob.
 
-**Lines 12 - 16** draw the circle and the centroid on the frame, with the condition that the calculated radius of the circle meets a minimum size. Finally, **Line 18** appends the centroid to the `pts` list.
+<u>Lines 12 - 16</u> draw the circle and the centroid on the frame, with the condition that the calculated radius of the circle meets a minimum size. Finally, <u>Line 18</u> appends the centroid to the `pts` list.
 
 ### Step 5
 The last step is to draw a line tracking the blob (specifically, at its centroid position) from the center of the frame.        
 
-```shell
+```Shell
 	if (pts[0] != None):
 		cv2.line(frame, pts[0], centerFrame, (0,255,0), 4)
 		
@@ -103,7 +103,7 @@ camera.release()
 cv2.destroyAllWindows()
 ```        
 
-**Lines 1 and 2** draw the connecting line, if the object is within the frame. The remaining lines of the code are simply to display the frame to our screen and stop when the 'q' key is pressed. 
+<u>Lines 1 and 2</u> draw the connecting line, if the object is within the frame. The remaining lines of the code are simply to display the frame to our screen and stop when the 'q' key is pressed. 
 
 ## Results
 ------
