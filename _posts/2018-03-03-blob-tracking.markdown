@@ -24,18 +24,18 @@ The key steps in designing the blob-tracking code are:
 ### **Step 1**
 Without further ado, lets jump right ahead into the first step, which involves initializing our "green" color and the list of tracked points. This part of the code looks like the following:        
 
-```Python
+```python
 greenLower = (30, 80, 5)
 greenUpper = (64, 255, 255)
 pts = deque(maxlen=args["buffer"])
 ```        
 
-<span style="color:blue">Lines <em>1</em> <em>and<em/> 2 shown above define the lower and upper boundaries of the "green" color in the HSV color space. This will help detect green objects in the video frame that are inside the specified range and filter out colors that are not. Depending on your lighting, this color range might need to be tweaked to better adjust to your surroundings. *Line 3* initializes the list of tracked points using the supplied maximum buffer size, which in default has a size of 64.
+<font color="blue">Lines 1 and 2 </font> shown above define the lower and upper boundaries of the "green" color in the HSV color space. This will help detect green objects in the video frame that are inside the specified range and filter out colors that are not. Depending on your lighting, this color range might need to be tweaked to better adjust to your surroundings. *Line 3* initializes the list of tracked points using the supplied maximum buffer size, which in default has a size of 64.
 
 ### **Step 2**
 For this step, we need to constantly take raw input image from one video frame to the next. This can be done by grabbing access to our `camera` pointer in a `while` loop. The loop will continue until we send a stop command.        
 
-```Python
+```python
 while True:
 	(grabbed, frame) = camera.read()
 ```        
@@ -43,7 +43,7 @@ while True:
 ### Step 3
 Next, still in the `while` loop, we need to create a binary mask of the image to identify green objects within the video frame.        
 
-```Python
+```python
 	frame = imutils.resize(frame, width=600)
 	height, width, channels = frame.shape
 	hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -60,7 +60,7 @@ Next, still in the `while` loop, we need to create a binary mask of the image to
 ### Step 4
 The next step is to draw out a circle enclosing the biggest remaining blob in the mask.        
 
-```Python
+```python
 	cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
 		cv2.CHAIN_APPROX_SIMPLE)[-2]
 	center = None
@@ -90,7 +90,7 @@ The next step is to draw out a circle enclosing the biggest remaining blob in th
 ### Step 5
 The last step is to draw a line tracking the blob (specifically, at its centroid position) from the center of the frame.        
 
-```Python
+```python
 	if (pts[0] != None):
 		cv2.line(frame, pts[0], centerFrame, (0,255,0), 4)
 		
