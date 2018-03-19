@@ -3,7 +3,7 @@ layout: post
 title: Image Stitching
 date: 2018-03-31 13:32:20 +0300
 description: For this post, I am writing about another computer vision algorithm my team and I designed for our senior design project last year, which is an image-stitching algorithm.
-img: # Add image post (optional)
+img: post-2b.png# Add image post (optional)
 tags: [image-stitching, OpenCV, Python]
 ---
 For this post, I am writing about another computer vision algorithm my team and I designed for our senior design project last year, which is an image-stitching algorithm. The code is written in Python using OpenCV (with `numpy` and `imutils` installed).
