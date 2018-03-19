@@ -3,7 +3,7 @@ layout: post
 title: Blob Tracking
 date: 2018-03-03 13:32:20 +0300
 description: For my first post in BediByte, I would like to write about one of the two computer vision algorithms my team and I wrote for our senior design project in December 2017, which is a blob-tracking algorithm # (optional)
-img: post-2a.png # Add image post (optional)
+img: post-2a.png # Add image post (optional).
 tags: [Python, OpenCV]
 ---
 For my first post in BediByte, I would like to write about one of the two computer vision algorithms my team and I wrote for our senior design project in December 2017, which is a blob-tracking algorithm. The code is written in Python using OpenCV (with `numpy` and `imutils` installed).
