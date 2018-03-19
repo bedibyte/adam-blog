@@ -10,10 +10,12 @@ For my first post in BediByte, I would like to write about one of the two comput
 
 ## Features
 ======
+
 Our blob-tracking algorithm identifies and encircles the biggest green blob seen within a video frame in real-time. This information is then used to track the blob via a line from the center of the video frame.
 
 ## Procedure
 ======
+
 The key steps in designing the blob-tracking code are:
 * **Step 1:** Initialize the HSV color range for green blob and the list of tracked points
 * **Step 2:** Take raw input image from one video frame to the next
@@ -107,16 +109,19 @@ cv2.destroyAllWindows()
 
 ## Results
 ======
+
 Here is a demo of the working code using the front cover of my HERBS book:
 
 [![Blob-tracking Demo]({{site.baseurl}}/assets/img/post-2b.png)](http://www.youtube.com/watch?v=8UeX5rUSoTE)
 
 ## Code
 ======
+
 If you would like to get more information about the code, feel free to drop me an email at [bedibyte@gmail.com](mailto:bedibyte@gmail.com).
 
 ## References
 ======
+
 [1] “Ball Tracking with OpenCV”, pyimagesearch.com, 2015. [Online]. Available [here](https://www.pyimagesearch.com/2015/09/14/ball-tracking-with-opencv/)   
 [2] “Morphological Transformations”, opencv.org, 2014. [Online]. Available [here](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html)
 
