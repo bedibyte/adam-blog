@@ -22,7 +22,6 @@ The key steps in designing the blob-tracking code are:
 * **Step 5:** Draw a line tracking the blob from the center of the frame
 
 ### **Step 1**
----
 Without further ado, lets jump right ahead into the first step, which involves initializing our "green" color and the list of tracked points. This part of the code looks like the following:        
 
 ```Shell
@@ -31,10 +30,9 @@ greenUpper = (64, 255, 255)
 pts = deque(maxlen=args["buffer"])
 ```        
 
-**Lines 1 and 2** shown above define the lower and upper boundaries of the "green" color in the HSV color space. This will help detect green objects in the video frame that are inside the specified range and filter out colors that are not. Depending on your lighting, this color range might need to be tweaked to better adjust to your surroundings. **Line 3** initializes the list of tracked points using the supplied maximum buffer size, which in default has a size of 64.
+*Lines 1 and 2* shown above define the lower and upper boundaries of the "green" color in the HSV color space. This will help detect green objects in the video frame that are inside the specified range and filter out colors that are not. Depending on your lighting, this color range might need to be tweaked to better adjust to your surroundings. *Line 3* initializes the list of tracked points using the supplied maximum buffer size, which in default has a size of 64.
 
 ### **Step 2**
----
 For this step, we need to constantly take raw input image from one video frame to the next. This can be done by grabbing access to our `camera` pointer in a `while` loop. The loop will continue until we send a stop command.        
 
 ```Shell
@@ -55,9 +53,9 @@ Next, still in the `while` loop, we need to create a binary mask of the image to
 	mask = cv2.dilate(mask, None, iterations=2)
 ```          
 
-**Lines 1 - 4** above are written first to resize (to cut down the processing time), convert the frame to HSV color space and get the center location of the frame. 
+*Lines 1 - 4* above are written first to resize (to cut down the processing time), convert the frame to HSV color space and get the center location of the frame. 
 
-**Lines 5 - 7** create a binary mask to locate any green blobs present (in our previously specified color range) within the frame. The output of the call `cv2.inRange` is a binary mask where values '1' and '0' are acquainted to the pixels that are green and to those that aren't, respectively. This helps identify the green blobs effectively. Any remaining small blobs (or noise) on the mask is then removed by performing erosions and dilations. More information about erosions and dilations can be read [here](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html).
+*Lines 5 - 7* create a binary mask to locate any green blobs present (in our previously specified color range) within the frame. The output of the call `cv2.inRange` is a binary mask where values '1' and '0' are acquainted to the pixels that are green and to those that aren't, respectively. This helps identify the green blobs effectively. Any remaining small blobs (or noise) on the mask is then removed by performing erosions and dilations. More information about erosions and dilations can be read [here](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html).
 
 ### Step 4
 The next step is to draw out a circle enclosing the biggest remaining blob in the mask.        
