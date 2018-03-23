@@ -37,7 +37,7 @@ The first step in designing the image stitching algorithm is to extract features
             features.append(features_i)
 ```
 
-<u>Line 1 sets up the `stitch` body with `images` as its input. The variable `images` (may consists up to an infinite amount) will be the images that we're going to stitch together.
+<u>Line 1</u> sets up the `stitch` body with `images` as its input. The variable `images` (may consists up to an infinite amount) will be the images that we're going to stitch together.
 
 ```Shell
         for i in range(0, image_count - 1):
