@@ -32,9 +32,8 @@ The first step in designing the image stitching algorithm is to extract features
         features = []
 
         for i in range(0, image_count):
-            (kps_i, features_i) = self.detectAndDescribe(images[i])  # calls "detectAndDescribe" class
-                                                                     #  located below after this "stitch" class
-            kps.append(kps_i)  # "append" is used to define an array in Python
+            (kps_i, features_i) = self.detectAndDescribe(images[i]) 
+            kps.append(kps_i) 
             features.append(features_i)
 ```
 
