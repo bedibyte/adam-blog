@@ -13,6 +13,7 @@ For this post, I am writing about another computer vision algorithm my team and 
 The image stitching algorithm is able to stitch an **unlimited** amount of images together in order from left-to-right orientation to create a panorama.
 
 ## Procedure
+-----
 The key steps in designing the code are:
 * **Step 1:** Extract features from input images
 * **Step 2:** Match correspondences
