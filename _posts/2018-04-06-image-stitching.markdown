@@ -4,7 +4,7 @@ title: Image Stitching
 date: 2018-04-06 13:32:20 +0300
 description: For this post, I am writing about another computer vision algorithm my team and I designed for our senior design project last year, which is an image-stitching algorithm.
 img: post-3.png # Add image post (optional)
-tags: [image-stitching, OpenCV, Python]
+tags: [Python, OpenCV]
 ---
 For this post, I am writing about another computer vision algorithm my team and I designed for our senior design project last year, which is an image-stitching algorithm. The code is written in Python using OpenCV (with `numpy` and `imutils` installed).
 
@@ -22,7 +22,7 @@ The key steps in designing the code are:
 * **Step 5:** Add all warped images together
 
 ### **Step 1**
-The first step in designing the image stitching algorithm is to extract features (specifically, descriptors and keypoints) from input images.
+The first step in designing the image stitching algorithm is to extract features (specifically, descriptors and keypoints) from all input images. These features are important for our next step in matching the correspondences between images.
 
 ```Shell
     def stitch(self, images, ratio=0.75, reprojThresh=4.0, showMatches=False):
@@ -37,7 +37,7 @@ The first step in designing the image stitching algorithm is to extract features
             features.append(features_i)
 ```
 
-<u>Line 1</u> sets up the `stitch` body with `images` as its input. The variable `images` (may consists up to an infinite amount) will be the images that we're going to stitch together.
+<u>Line 1</u> sets up the `stitch` body with `images` as its input. The variable `images` (may consists up to an infinite amount) will be the images that we're going to stitch together. It is important to note that the `images` list must be taken in in order as the code will stitch these images from left-to-right starting from the first uploaded image to the next.
 
 ```Shell
         for i in range(0, image_count - 1):
