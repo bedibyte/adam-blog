@@ -10,7 +10,7 @@ For this post, I am writing about another computer vision algorithm my team and 
 
 ## Features
 -----
-The image stitching algorithm is able to stitch an **unlimited** amount of images together in order from left-to-right orientation to create a panorama.
+The image stitching algorithm is able to stitch an unlimited amount of images together in order from left-to-right orientation to create a panorama.
 
 ## Procedure
 -----
@@ -37,7 +37,16 @@ The first step in designing the image stitching algorithm is to extract features
             features.append(features_i)
 ```
 
-<u>Line 1</u> sets up the `stitch` body with `images` as its input. The variable `images` (may consists up to an infinite amount) will be the images that we're going to stitch together. It is important to note that the `images` list must be taken in in order as the code will stitch these images from left-to-right starting from the first uploaded image to the next.
+<u>Line 1</u> sets up the `stitch` function with `images` as its input. The variable `images` (may consists up to an infinite amount) will be the images that we're going to stitch together. It is important to note that the `images` list must be taken in according to order as the code will stitch these images from left-to-right, starting from the first image on the list to the next.
+
+<u>Line 3</u> calculates the number of input images, while <u>Lines 4 and 5</u> initialize `kps` and `features` as empty matrices. 
+
+Once we have done that, we call the `detectAndDescribe` function on <u>Line 8</u> for all of our input images. This function typically detects keypoints and extracts local invariant descriptors (i.e. SIFT) from all of the images.
+
+Finally, <u>Lines 9 and 10</u> append the results into our respective `kps` and `features` matrices.
+
+### **Step 2**
+Our next step involves using the gathered information from Step 1 to match correspondences between images. 
 
 ```Shell
         for i in range(0, image_count - 1):
@@ -49,4 +58,5 @@ The first step in designing the image stitching algorithm is to extract features
             H.append(H_i)
             status.append(status_i)
 ```
+
 ## BLOG POST IS UNDER CONSTRUCTION
