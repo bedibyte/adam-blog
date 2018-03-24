@@ -41,7 +41,8 @@ The first step in designing the image stitching algorithm is to extract features
 Finally, <u>Lines 6 and 7</u> append the results into our `kps` and `features` matrices.
 
 ### **Step 2**
-    Our next step involves using the gathered information (specifically, `kps` and `features`) from Step 1 to match correspondences between images. 
+
+Our next step involves using the gathered information (specifically, `kps` and `features`) from Step 1 to match correspondences between images. 
 
 ```Shell
         for i in range(0, image_count - 1):
