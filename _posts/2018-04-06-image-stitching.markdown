@@ -25,11 +25,8 @@ The key steps in designing the code are:
 The first step in designing the image stitching algorithm is to extract features (specifically, descriptors and keypoints) from all input images.
 
 ```Shell
-    def stitch(self, images, ratio=0.75, reprojThresh=4.0, showMatches=False):
-    
+    def stitch(self, images, ratio=0.75, reprojThresh=4.0, showMatches=False):  
         image_count = len(images)
-        kps = []
-        features = []
 
         for i in range(0, image_count):
             (kps_i, features_i) = self.detectAndDescribe(images[i]) 
@@ -39,11 +36,9 @@ The first step in designing the image stitching algorithm is to extract features
 
 <u>Line 1</u> sets up the `stitch` function with `images` as its input. The variable `images` (may consists up to an infinite amount) will be the images that we're going to stitch together. It is important to note that the `images` list must be taken in according to order as the code will stitch these images from left-to-right, starting from the first image on the list to the next.
 
-<u>Line 3</u> calculates the number of input images, while <u>Lines 4 and 5</u> initialize `kps` and `features` as empty matrices. 
+<u>Line 2</u> calculates the number of input images. Once we have done that, we call the `detectAndDescribe` function on <u>Line 5</u> for all of our input images. This function typically detects keypoints and extracts local invariant descriptors (i.e. SIFT) from all of the images.
 
-Once we have done that, we call the `detectAndDescribe` function on <u>Line 8</u> for all of our input images. This function typically detects keypoints and extracts local invariant descriptors (i.e. SIFT) from all of the images.
-
-Finally, <u>Lines 9 and 10</u> append the results into our `kps` and `features` matrices.
+Finally, <u>Lines 6 and 7</u> append the results into our `kps` and `features` matrices.
 
 ### **Step 2**
     Our next step involves using the gathered information (specifically, `kps` and `features`) from Step 1 to match correspondences between images. 
