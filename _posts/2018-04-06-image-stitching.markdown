@@ -34,15 +34,15 @@ The first step in designing the image stitching algorithm is to extract features
             features.append(features_i)
 ```
 
-<u>Line 1</u> sets up the `stitch` function with `images` as its input. The variable `images` (may consists up to an infinite amount) will be the images that we're going to stitch together. It is important to note that the `images` list must be taken in according to order as the code will stitch these images from left-to-right, starting from the first image on the list to the next.
+<u>Line 1</u> sets up the `stitch` function with `images` as its input. The variable `images` (may consists up to an infinite amount) will be the images that we're going to stitch together. It is important to note that the `images` list must be taken in according to order as the code will stitch these images from left to right, starting from the first image on the list to the next.
 
-<u>Line 2</u> calculates the number of input images. Once we have done that, we call the `detectAndDescribe` function on <u>Line 5</u> for all of our input images. This function typically detects keypoints and extracts local invariant descriptors (i.e. SIFT) from all of the images.
+<u>Line 2</u> calculates the number of input images. Once we have done that, we call the `detectAndDescribe` function on <u>Line 5</u> for all of our input images. This function detects keypoints and extracts local invariant descriptors (i.e. SIFT) from the images.
 
-Finally, <u>Lines 6 and 7</u> append the results into our `kps` and `features` matrices.
+Finally, <u>Lines 6 and 7</u> append the resulting keypoints and features into our `kps` and `features` matrices, respectively.
 
 ### **Step 2**
 
-Our next step involves using the gathered information (specifically, `kps` and `features`) from Step 1 to match correspondences between images. 
+Our next step involves using the gathered information from Step 1 to match correspondences between images. 
 
 ```Shell
         for i in range(0, image_count - 1):
@@ -55,8 +55,8 @@ Our next step involves using the gathered information (specifically, `kps` and `
             status.append(status_i)
 ```
 
-<u>Lines 2 and 3</u> above call the `matchKeypoints` function to match the features in our images. This method will be explained in more detail later at the bottom part of this post. The output of this function gives us a list of keypoint matches (`matches_i`), the homography matrix (`H_i`) which is derived from the RANSAC algorithm, and status (`status_i`) which is a list of indexes that indicates the keypoints in `matches` that were successfully verified using RANSAC.
+<u>Lines 2 and 3</u> above call the `matchKeypoints` function to match the features from **adjacent** images using our previously found `kps` and `features` matrices. This method will be explained in more detail later at the bottom part of this post. The output of this function gives us a list of keypoint matches (`matches_i`), the homography matrix (`H_i`) which is derived from the RANSAC algorithm, and status (`status_i`) which is a list of indexes that indicates the keypoints in `matches_i` that were successfully verified.
 
-The remaining four lines append the results to the respective defined matrices.
+The remaining four lines append the results to their respective matrices.
 
 ## BLOG POST IS UNDER CONSTRUCTION
