@@ -24,7 +24,7 @@ The key steps in designing the code are:
 ### **Step 1**
 The first step in designing the image stitching algorithm is to extract features (specifically, keypoints and descriptors) from all input images.
 
-```Shell
+```python
     def stitch(self, images, ratio=0.75, reprojThresh=4.0, showMatches=False):  
         image_count = len(images)
 
@@ -44,7 +44,7 @@ Finally, <u>Lines 6 and 7</u> append the resulting keypoints and descriptors int
 
 Our next step is to match correspondences between images. 
 
-```Shell
+```python
         for i in range(0, image_count - 1):
             M_i = self.matchKeypoints(kps[i], kps[i+1],
                                        des[i], des[i+1], ratio, reprojThresh)
@@ -65,7 +65,7 @@ Using the `kps` and `des` lists found in the previous step, <u>Lines 2 and 3</u>
 
 To create a panorama, we need homography matrices of all images to be with respect to only one chosen anchor image. For example, in our case where image_0 is chosen as the anchor image, the homography matrices needed to be found are H_01, H_02, and so on. Hence, we need to tweak all of the homography matrices found from the previous step.
 
-```Shell
+```python
         Href = []
 
         for i in range(0, image_count):
