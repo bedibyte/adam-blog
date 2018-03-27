@@ -15,11 +15,11 @@ The image stitching algorithm is able to stitch an unlimited amount of images to
 ## Procedure
 -----
 The key steps in designing the code are:
-* **Step 1:** Extract features and keypoints from input images
+* **Step 1:** Extract features from input images
 * **Step 2:** Match correspondences
 * **Step 3:** Calculate homography matrix, H with respect to an anchor image
-* **Step 4:** Warp all input images individually
-* **Step 5:** Add all warped images together
+* **Step 4:** Warp input images individually
+* **Step 5:** Add warped images together
 
 ### **Step 1**
 The first step in designing the image stitching algorithm is to extract features (specifically, keypoints and descriptors) from all input images.
@@ -34,7 +34,7 @@ The first step in designing the image stitching algorithm is to extract features
             des.append(des_i)
 ```
 
-<u>Line 1</u> sets up the `stitch` function with `images` as its input. The variable `images` (may consists up to an infinite amount) will be the images that we're going to stitch together. It is important to note that the `images` list must be taken in **according to order** as the code will stitch these images from left to right, starting from the first image on the list to the next.
+<u>Line 1</u> sets up the `stitch` function with `images` as its input. The variable `images` (may consists up to an infinite amount) will be the images that we're going to stitch together. It is important to note that the `images` list must be taken in according to order as the code will stitch these images from left to right, starting from the first image on the list to the next.
 
 <u>Line 2</u> calculates the number of input images. Once we have done that, we create a `for` loop on <u>Line 4</u> to account for all of the images and call the `detectAndDescribe` function in the loop on <u>Line 5</u>. This function detects keypoints and extracts local invariant descriptors (i.e. SIFT) from the images.
 
@@ -55,15 +55,15 @@ Our next step is to match correspondences between images.
             status.append(status_i)
 ```
 
-Using the `kps` and `des` lists found, <u>Lines 2 and 3</u> above call the `matchKeypoints` function to match the features from all **adjacent** images (i.e. image_0 with image_1, image_1 with image_2, and so on). This method will be explained in more detail later at the bottom part of this post. 
+Using the `kps` and `des` lists found in the previous step, <u>Lines 2 and 3</u> above call the `matchKeypoints` function to match the features from all adjacent images (i.e. image_0 with image_1, image_1 with image_2, and so on). This method will be explained in more detail later at the bottom part of this post. 
 
-The important output of the `matchKeypoints` function is the homography matrix, `H_i` which is derived from the RANSAC algorithm. A homography matrix is typically an image transformation matrix that tells you how one image relates to another. In mathematics, this can be equated by *image_0 = H_01 x image_1*, where H_01 relates image_1 to image_0. Note that the homography matrices found in this step are H_01, H_12, H_23, and so on.
+<u>Line 4</u> extracts the outputs of the function. The most important output is the homography matrix, `H_i` which is derived from the RANSAC algorithm. A homography matrix is typically an image transformation matrix that tells you how one image relates to the other. In mathematics, this can be equated by *image_0 = H_01 X image_1*, where H_01 relates image_1 to image_0. Hence, the homography matrices found in this step are H_01, H_12, and so on.
 
 <u>Lines 5 - 8</u> append the results to their respective lists. 
 
-## **Step 3**
+### **Step 3**
 
-To warp images to create a panorama, we need homography matrices that are with respect to only one chosen anchor image. For example, in our case where image_0 is chosen as the anchor image, the homography matrices needed to be found are H_01, H_02, H_03 and so on. Hence, we need to tweak all of the homography matrices found from the previous step.
+To create a panorama, we need homography matrices of all images to be with respect to only one chosen anchor image. For example, in our case where image_0 is chosen as the anchor image, the homography matrices needed to be found are H_01, H_02, and so on. Hence, we need to tweak all of the homography matrices found from the previous step.
 
 ```Shell
         Href = []
@@ -79,9 +79,9 @@ To warp images to create a panorama, we need homography matrices that are with r
 
 <u>Line 1</u> above initializes the empty `Href` list. 
 
-<u>Lines 4 - 6</u> under the `for` loop sets image_0 as our anchor image by setting its homography matrix, H_0 as an identity matrix. 
+<u>Lines 4 - 6</u> under the `for` loop sets image_0 as our anchor image. This can be done by setting its homography matrix, H_0 as an identity matrix. 
 
-By matrix multiplication rules, <u>Lines 7 - 9</u> computes new homography matrices of all images with respect to image_0. For example, *H_01 = H_0 x inv(H_01)*, *H_02 = H_01 x inv(H_12)*, and so on. Once we have that, the matrices are appended to our `Href` list.
+Using basic matrix multiplication rules, <u>Lines 7 - 9</u> compute new homography matrices of all images with respect to image_0. For example, *H_01 = H_0 X inv(H_01)* and *H_02 = H_01 X inv(H_12)*. Once we have done that, the matrices are appended to our `Href` list.
 
 
 ## BLOG POST IS UNDER CONSTRUCTION
