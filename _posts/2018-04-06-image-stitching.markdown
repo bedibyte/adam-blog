@@ -55,8 +55,31 @@ Our next step is to match correspondences between images.
             status.append(status_i)
 ```
 
-Using the `kps` and `des` matrices found in Step 1, <u>Lines 2 and 3</u> above call the `matchKeypoints` function to match the features from all **adjacent** images (i.e. image_1 with image_2, image_3 with image_4, and so on). This method will be explained in more detail later at the bottom part of this post. The output of this function gives us a list of keypoint matches (`matches_i`), the homography matrix (`H_i`) which is derived from the RANSAC algorithm, and status (`status_i`) which is a list of indexes that indicates the keypoints in `matches_i` that were successfully verified.
+Using the `kps` and `des` matrices found in Step 1, <u>Lines 2 and 3</u> above call the `matchKeypoints` function to match the features from all **adjacent** images (i.e. image_0 with image_1, image_1 with image_2, and so on). This method will be explained in more detail later at the bottom part of this post. The output of this function gives us a list of keypoint matches (`matches_i`), the homography matrix (`H_i`) which is derived from the RANSAC algorithm, and status (`status_i`) which is a list of indexes that indicates the keypoints in `matches_i` that were successfully verified.
 
 The remaining four lines append the results to their respective matrices.
+
+## **Step 3**
+
+For this step, we have to tweak all homography matrices found from Step 2 to new homography matrices that are with respect to one chosen anchor image.
+
+```Shell
+        # compute all homography matrices needed with respect to a chosen anchor image (image0)
+        # H_0 = identity matrix
+        # H_1 = H_0*inv(H_01) = homography matrix of image1 with respect to image0
+        # H_2 = H_1*inv(H_12) = homography matrix of image2 with respect to image0
+        # and so on...
+        Href = []
+
+        for i in range(0, image_count):
+            if i == 0:
+                Href_i = np.identity(3)
+                Href.append(Href_i)
+            else:
+                Href_i = np.dot(Href[i-1], np.linalg.inv(H[i-1]))
+                Href.append(Href_i)
+```
+First, we need to understand what an homography matrix is. A homography matrix is typically an image transformation matrix that tells you how one image relates to another (if image_0 is a mirror of image_1, if image_0 is 45 degrees clockwise off of image_1, etc.). 
+
 
 ## BLOG POST IS UNDER CONSTRUCTION
