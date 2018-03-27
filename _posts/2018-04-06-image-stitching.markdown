@@ -38,7 +38,7 @@ The first step in designing the image stitching algorithm is to extract features
 
 <u>Line 2</u> calculates the number of input images. Once we have done that, we create a `for` loop on <u>Line 4</u> to account for all of the images and call the `detectAndDescribe` function in the loop on <u>Line 5</u>. This function detects keypoints and extracts local invariant descriptors (i.e. SIFT) from the images.
 
-Finally, <u>Lines 6 and 7</u> append the resulting keypoints and descriptors into our `kps` and `des` matrices, respectively.
+Finally, <u>Lines 6 and 7</u> append the resulting keypoints and descriptors into our `kps` and `des` lists, respectively.
 
 ### **Step 2**
 
@@ -57,18 +57,15 @@ Our next step is to match correspondences between images.
 
 Using the `kps` and `des` matrices found in Step 1, <u>Lines 2 and 3</u> above call the `matchKeypoints` function to match the features from all **adjacent** images (i.e. image_0 with image_1, image_1 with image_2, and so on). This method will be explained in more detail later at the bottom part of this post. The output of this function gives us a list of keypoint matches (`matches_i`), the homography matrix (`H_i`) which is derived from the RANSAC algorithm, and status (`status_i`) which is a list of indexes that indicates the keypoints in `matches_i` that were successfully verified.
 
-The remaining four lines append the results to their respective matrices.
+Note that the most important variable from this step is the homography matrix (`H_i`). A homography matrix is typically an image transformation matrix that tells you how one image relates to another (i.e. if image_0 is a mirror of image_1, or if image_0 is 45 degrees clockwise off of image_1, or etc.). In mathematics, its equation is image_0 = H_01 * image_1, where H_01 relates image_1 to image_0.
+
+The remaining four lines append the results to their respective lists. The list `H` here contains homography matrices of neighboring images.
 
 ## **Step 3**
 
-For this step, we have to tweak all homography matrices found from Step 2 to new homography matrices that are with respect to one chosen anchor image.
+For this step, we have to tweak all of the homography matrices found from Step 2 (i.e. H_01, H_12, H_23 and so on) to new homography matrices that are with respect to only one chosen anchor image (i.e. H_01, H_02, H_03 and so on) whereby image_0 was chosen as the anchor image.
 
 ```Shell
-        # compute all homography matrices needed with respect to a chosen anchor image (image0)
-        # H_0 = identity matrix
-        # H_1 = H_0*inv(H_01) = homography matrix of image1 with respect to image0
-        # H_2 = H_1*inv(H_12) = homography matrix of image2 with respect to image0
-        # and so on...
         Href = []
 
         for i in range(0, image_count):
@@ -79,7 +76,12 @@ For this step, we have to tweak all homography matrices found from Step 2 to new
                 Href_i = np.dot(Href[i-1], np.linalg.inv(H[i-1]))
                 Href.append(Href_i)
 ```
-First, we need to understand what an homography matrix is. A homography matrix is typically an image transformation matrix that tells you how one image relates to another (if image_0 is a mirror of image_1, if image_0 is 45 degrees clockwise off of image_1, etc.). 
+
+<u>Line 1</u> above initializes the empty `Href` list. 
+
+<u>Lines 4 - 6</u> under the `for` loop sets image_0 as our anchor image by setting its homography matrix (H_0) as an identity matrix. 
+
+By matrix multiplication rules, <u>Lines 7 - 9</u> computes new homography matrices of all images with respect to image_0. For example, H_01 = H_0 * inv(H_01), H_02 = H_01 * inv(H_12), and so on.
 
 
 ## BLOG POST IS UNDER CONSTRUCTION
