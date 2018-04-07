@@ -99,22 +99,29 @@ Next, we warp all input images with respect to the chosen anchor image using the
 
 <u>Line 1</u> initializes the empty `warped` list. 
 
-<u>Lines 3 - 6</u> handle the warping of the images. More specifically, <u>Line 4</u> ensures that `images[i]` is warped using its corresponding calculated homography `Href[i]`, while <u>Line 5</u> makes sure that the length of the warped image is equal to the total length of all the images and <u>Line 6</u> sets the height of the warped image to be the height of image_0 (note: since we are sticthing from left to right, the height of warped image stays the same). 
+<u>Lines 3 - 6</u> handle the warping of the images. More specifically, <u>Line 4</u> ensures that `images[i]` is warped using its corresponding calculated homography `Href[i]`, while <u>Line 5</u> makes sure that the length of the warped image is equal to the total length of all the images and <u>Line 6</u> sets the height of the warped image to be the height of image_0 (Note: since we are stitching from left to right, the height of warped image stays the same). 
 
 Again, <u>Line 7</u> appends the warped images to our `warped` list.
 
 ### **Step 5**
-Once we get all of the warped images, we simply "add" all of them together to create a panorama. This is done by comparing one warped image to the next (from left to right), pixel by pixel. To illustrate, if at a particular pixel both images are black, then the output is black. If only the right image is black at that pixel, then output the left image. If both images are RGB at the same pixel, then output the left image. Lastly, if only the left image is black at the same pixel, then output the right image.
+Once we get all of the warped images, we simply "add" all of them together to create a panorama. To do that, we first need to obtain the pixel size (specifically, height and length) of the warped images.
 
 ```Shell
-        y = []
         x = []
+        y = []
 
         for i in range (0, image_count):
-            (y_i, x_i) = warped[i].shape[:2]  # to obtain the pixel size (height and length) of warped images
+            (y_i, x_i) = warped[i].shape[:2]
             y.append(y_i)
             x.append(x_i)
+```
+<u>Lines 1 and 2</u> initialize the length `x` and height `y` variables.
 
+<u>Lines 4 - 7</u> obtain the height and length of each warped image and save the values in the corresponding `x` and `y` lists.
+
+Using this information, we can now create the panorama. This is done by comparing one warped image to the next (from left to right), pixel by pixel. 
+
+```Shell
         for i in range(0, image_count-1):
             for m in range(0, x[i]):
                 for n in range(0, y[i]):
@@ -128,20 +135,14 @@ Once we get all of the warped images, we simply "add" all of them together to cr
                             else:
                                 if not np.array_equal(warped[i][n,m],[0,0,0]):
                                     warped[i+1][n,m] = warped[i][n,m]
-                                    #b_r1, g_r1, r_r1 = warped[i+1][n,m]
-                                    #b_r0, g_r0, r_r0 = warped[i][n,m]
-                                    #warped[i+1][n,m] = b_r0, g_r0, r_r0
                     except:
                         pass
 
-        result = warped[image_count-1]
-
         for i in range(image_count):
             result = warped[i]
-
-        # return the stitched image
-        return result
 ```
+<u>Lines 1 - 15</u> handle the stitching of all warped images. To illustrate, if at a particular pixel both the left and right images are black, <u>Lines 4 - 7</u> output the color black. <u>Lines 8 - 13</u> on the other hand ensure to output only the left image if only the right image is black at that pixel, or if both images are not black.
 
+Finally, <Lines 17 - 18</u> combine the `warped` list to our `result` variable to create a panorama.
 
 ## BLOG POST IS UNDER CONSTRUCTION
