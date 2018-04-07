@@ -91,9 +91,9 @@ Next, we warp all input images with respect to the chosen anchor image using the
         warped = []
 
         for i in range(0, image_count):
-            warped_i = cv2.warpPerspective(images[i],Href[i],                # warp image[i] using Href[i] calculated
-                                           (images[0].shape[1]*image_count,  # length of warped image
-                                            images[0].shape[0]))             # height of warped image
+            warped_i = cv2.warpPerspective(images[i],Href[i],
+                                           (images[0].shape[1]*image_count,
+                                            images[0].shape[0]))   
             warped.append(warped_i)
 ```
 
