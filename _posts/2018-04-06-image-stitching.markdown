@@ -126,7 +126,7 @@ Using this information, we can now create the panorama. This is done by comparin
             for m in range(0, x[i]):
                 for n in range(0, y[i]):
                     try:
-                        if(np.array_equal(warped[i][n,m],np.array([0,0,0]))  # where [n,m] are pixel coordinates
+                        if(np.array_equal(warped[i][n,m],np.array([0,0,0]))
                            and np.array_equal(warped[i+1][n,m],np.array([0,0,0]))):
                             warped[i+1][n,m] = [0,0,0]
                         else:
@@ -143,6 +143,6 @@ Using this information, we can now create the panorama. This is done by comparin
 ```
 <u>Lines 1 - 15</u> handle the stitching of all warped images. To illustrate, if at a particular pixel both the left and right images are black, <u>Lines 4 - 7</u> output the color black. <u>Lines 8 - 13</u> on the other hand ensure to output only the left image if only the right image is black at that pixel, or if both images are not black.
 
-Finally, <Lines 17 - 18</u> combine the `warped` list to our `result` variable to create a panorama.
+Finally, <u>Lines 17 - 18</u> combine the `warped` list to our `result` variable to create a panorama.
 
 ## BLOG POST IS UNDER CONSTRUCTION
