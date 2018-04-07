@@ -83,5 +83,65 @@ To create a panorama, we need homography matrices of all images to be with respe
 
 Using basic matrix multiplication rules, <u>Lines 7 - 9</u> compute new homography matrices of all images with respect to image_0. For example, *H_01 = H_0 X inv(H_01)* and *H_02 = H_01 X inv(H_12)*. Once we have done that, the matrices are appended to our `Href` list.
 
+### **Step 4**
+
+Next, we warp all input images with respect to the chosen anchor image using the computed homography matrices found in the previous step.
+
+```Shell
+        warped = []
+
+        for i in range(0, image_count):
+            warped_i = cv2.warpPerspective(images[i],Href[i],                # warp image[i] using Href[i] calculated
+                                           (images[0].shape[1]*image_count,  # length of warped image
+                                            images[0].shape[0]))             # height of warped image
+            warped.append(warped_i)
+```
+
+<u>Line 1</u> initializes the empty `warped` list. 
+
+<u>Lines 3 - 6</u> handle the warping of the images. More specifically, <u>Line 4</u> ensures that `images[i]` is warped using its corresponding calculated homography `Href[i]`, while <u>Line 5</u> makes sure that the length of the warped image is equal to the total length of all the images and <u>Line 6</u> sets the height of the warped image to be the height of image_0 (note: since we are sticthing from left to right, the height of warped image stays the same). 
+
+Again, <u>Line 7</u> appends the warped images to our `warped` list.
+
+### **Step 5**
+Once we get all of the warped images, we simply "add" all of them together to create a panorama. This is done by comparing one warped image to the next (from left to right), pixel by pixel. To illustrate, if at a particular pixel both images are black, then the output is black. If only the right image is black at that pixel, then output the left image. If both images are RGB at the same pixel, then output the left image. Lastly, if only the left image is black at the same pixel, then output the right image.
+
+```Shell
+        y = []
+        x = []
+
+        for i in range (0, image_count):
+            (y_i, x_i) = warped[i].shape[:2]  # to obtain the pixel size (height and length) of warped images
+            y.append(y_i)
+            x.append(x_i)
+
+        for i in range(0, image_count-1):
+            for m in range(0, x[i]):
+                for n in range(0, y[i]):
+                    try:
+                        if(np.array_equal(warped[i][n,m],np.array([0,0,0]))  # where [n,m] are pixel coordinates
+                           and np.array_equal(warped[i+1][n,m],np.array([0,0,0]))):
+                            warped[i+1][n,m] = [0,0,0]
+                        else:
+                            if(np.array_equal(warped[i+1][n,m],[0,0,0])):
+                                warped[i+1][n,m] = warped[i][n,m]
+                            else:
+                                if not np.array_equal(warped[i][n,m],[0,0,0]):
+                                    warped[i+1][n,m] = warped[i][n,m]
+                                    #b_r1, g_r1, r_r1 = warped[i+1][n,m]
+                                    #b_r0, g_r0, r_r0 = warped[i][n,m]
+                                    #warped[i+1][n,m] = b_r0, g_r0, r_r0
+                    except:
+                        pass
+
+        result = warped[image_count-1]
+
+        for i in range(image_count):
+            result = warped[i]
+
+        # return the stitched image
+        return result
+```
+
 
 ## BLOG POST IS UNDER CONSTRUCTION
